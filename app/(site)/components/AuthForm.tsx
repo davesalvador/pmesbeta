@@ -8,6 +8,7 @@ import AuthSocialButton from "./AuthSocialButton";
 import { BsGithub, BsGoogle } from "react-icons/bs";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import { signIn } from "next-auth/react";
 
 type Variant = "LOGIN" | "REGISTER";
 const AuthForm = () => {
@@ -43,12 +44,26 @@ const AuthForm = () => {
       axios
         .post("/api/register", data)
 
+        //Toast when email is wrong
         .catch(() => toast.error("Something went wrong !"))
 
         .finally(() => setIsLoading(false));
     }
     if (variant === "LOGIN") {
       //NextAuth SignIn
+      signIn("credentials", {
+        ...data,
+        redirect: false,
+      })
+        .then((callback) => {
+          if (callback?.error) {
+            toast.error("Invalid credentials");
+          }
+          if (callback?.ok && !callback?.error) {
+            toast.success("Logged in!");
+          }
+        })
+        .finally(() => setIsLoading(false));
     }
   };
 
@@ -56,6 +71,17 @@ const AuthForm = () => {
     setIsLoading(true);
 
     //NextAuth Social Sign In
+
+    signIn(action, { redirect: false })
+      .then((callback) => {
+        if (callback?.error) {
+          toast.error("Invalid Credentials");
+        }
+        if (callback?.ok && !callback?.error) {
+          toast.success("Logged in!");
+        }
+      })
+      .finally(() => setIsLoading(false));
   };
 
   return (

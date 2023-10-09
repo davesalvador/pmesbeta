@@ -5,6 +5,7 @@ import { useState } from "react";
 import useConversation from "@/app/hooks/useConversation";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
+import ConversationBox from "./ConversationBox";
 
 interface ConversationListProps {
   initialItems: FullConversationType[];
@@ -19,9 +20,10 @@ const ConversationList: React.FC<ConversationListProps> = ({
 
   const { conversationId, isOpen } = useConversation();
   return (
-    <aside
-      className={clsx(
-        `
+    <>
+      <aside
+        className={clsx(
+          `
   fixed 
   inset-y-0
   pb-20
@@ -33,31 +35,45 @@ const ConversationList: React.FC<ConversationListProps> = ({
   border-r
   border-gray-200
   `,
-        isOpen ? "hidden" : "block w-full left-0"
-      )}
-    >
-      <div className="px-5">
-        <div className="flex justify-between mb-4 pt-4">
-          <div
-            className="
+          isOpen ? "hidden" : "block w-full left-0"
+        )}
+      >
+        <div className="px-5">
+          <div className="flex justify-between mb-4 pt-4">
+            <div
+              className="
           text-2xl
           font-blod
           text-neutral-800
           "
-          >
-            messages
+            >
+              Messages
+            </div>
+            <div
+              className="
+          rounded-full
+          p-2
+          bg-gray-100
+          text-gray-600
+          cursor-pointer
+          hover:opacity-75
+          transition
+          "
+            >
+              <MdOutlineGroupAdd size={20} />
+            </div>
           </div>
-          <div>
-            <MdOutlineGroupAdd />
-          </div>
+          {items.map((item) => (
+            <ConversationBox
+              key={item.id}
+              data={item}
+              selected={conversationId === item.id}
+            />
+          ))}
         </div>
-      </div>
-    </aside>
+      </aside>
+    </>
   );
 };
 
 export default ConversationList;
-
-{
-  34323;
-}

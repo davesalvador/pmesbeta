@@ -10,7 +10,7 @@ const EmptyState = () => {
         text-gray-900
         "
         >
-          Select a Chat start a new convo putanginaaaaa
+          Select a Chat start a new convo
           {/* animation */}
         </h3>
       </div>

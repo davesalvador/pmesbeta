@@ -1,6 +1,6 @@
 "use client";
 import { FullConversationType } from "@/app/types";
-import { MDOutlineGroupAdd } from "react-icons/md";
+import { MdOutlineGroupAdd } from "react-icons/md";
 import { useState } from "react";
 import useConversation from "@/app/hooks/useConversation";
 import clsx from "clsx";
